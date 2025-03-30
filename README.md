@@ -4,8 +4,15 @@ A mobile application that helps users locate DICK'S Sporting Goods stores using 
 
 ## Architecture Components
 
+This app follows Clean Architecture principles with MVVM pattern.
+
 ## Screenshots
-[Add screenshots here]
+<img alt="Store Search Screen" src="C:\Users\kingj\OneDrive\Pictures\Screenshots\DSG1.png"/>
+<img alt="Store Results" src="C:\Users\kingj\OneDrive\Pictures\Screenshots\DSG2.png"/>
+<img alt="Location Permission" src="C:\Users\kingj\OneDrive\Pictures\Screenshots\DSG3.png"/>
+<img alt="Location Permission" src="C:\Users\kingj\OneDrive\Pictures\Screenshots\DSG4.png"/>
+<img alt="Location Permission" src="C:\Users\kingj\OneDrive\Pictures\Screenshots\DSG5.png"/>
+
 
 ### 1. Data Layer
 - **StoreApiService**: Interface for making API calls to the DSG store search endpoint
