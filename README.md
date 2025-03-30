@@ -1,6 +1,6 @@
 # DSG Store Finder
 
-A mobile application that helps users locate DICK'S Sporting Goods stores using ZIP codes or their current location.
+Locate DICK'S Sporting Goods stores using ZIP codes or their current location.
 
 ## Architecture Components
 
