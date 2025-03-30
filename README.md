@@ -7,12 +7,18 @@ A mobile application that helps users locate DICK'S Sporting Goods stores using 
 This app follows Clean Architecture principles with MVVM pattern.
 
 ## Screenshots
-<img alt="Store Search Screen" src="C:\Users\kingj\OneDrive\Pictures\Screenshots\DSG1.png"/>
-<img alt="Store Results" src="C:\Users\kingj\OneDrive\Pictures\Screenshots\DSG2.png"/>
-<img alt="Location Permission" src="C:\Users\kingj\OneDrive\Pictures\Screenshots\DSG3.png"/>
-<img alt="Location Permission" src="C:\Users\kingj\OneDrive\Pictures\Screenshots\DSG4.png"/>
-<img alt="Location Permission" src="C:\Users\kingj\OneDrive\Pictures\Screenshots\DSG5.png"/>
 
+<div style="text-align: center;">
+  <h1 style="font-size: 36px; margin-bottom: 20px;">Pokedex</h1>
+  
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <img src="https://github.com/user-attachments/assets/72707731-b309-46e2-a55f-909926fa6cdb" style="width: 30%; max-width: 100;">
+    <img src="https://github.com/user-attachments/assets/9329eb92-5972-4c53-881f-7ff222c5fa3" style="width: 30%; max-width: 100px;">
+    <img src="https://github.com/user-attachments/assets/1b066175-63cb-4200-9fe9-c0f734445dff" style="width: 30%; max-width: 100px;">
+    <img src="https://github.com/user-attachments/assets/ff1b8be7-d79e-4662-bae0-0dfbaf861c34" style="width: 30%; max-width: 100px;">
+    <img src="https://github.com/user-attachments/assets/88f18f98-e248-4322-bf17-1364f449fa72" style="width: 30%; max-width: 100px;">
+  </div>
+</div>
 
 ### 1. Data Layer
 - **StoreApiService**: Interface for making API calls to the DSG store search endpoint
