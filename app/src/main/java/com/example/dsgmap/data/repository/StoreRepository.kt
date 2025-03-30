@@ -24,19 +24,7 @@ class StoreRepository @Inject constructor(
         } else {
             emit(Result.success(emptyList()))
         }
-    }.catch { e ->
-        when (e) {
-            is HttpException -> {
-                when (e.code()) {
-                    404 -> emit(Result.success(emptyList()))
-                    else -> emit(Result.failure(Exception("API error: ${e.code()} ${e.message()}")))
-                }
-            }
-            else -> {
-                emit(Result.failure(e))
-            }
-        }
-    }
+    }.handleStoreApiErrors()
 
     fun searchStoresByLocation(latitude: Double, longitude: Double): Flow<Result<List<StoreUiModel>>> = flow {
         val latLng = "$latitude,$longitude"
@@ -47,24 +35,27 @@ class StoreRepository @Inject constructor(
         } else {
             emit(Result.success(emptyList()))
         }
-    }.catch { e ->
-        when (e) {
-            is HttpException -> {
-                when (e.code()) {
-                    404 -> emit(Result.success(emptyList()))
-                    else -> emit(Result.failure(Exception("API error: ${e.code()} ${e.message()}")))
+    }.handleStoreApiErrors()
+
+    private fun Flow<Result<List<StoreUiModel>>>.handleStoreApiErrors(): Flow<Result<List<StoreUiModel>>> =
+        this.catch { e ->
+            when (e) {
+                is HttpException -> {
+                    when (e.code()) {
+                        404 -> emit(Result.success(emptyList()))
+                        else -> emit(Result.failure(Exception("API error: ${e.code()} ${e.message()}")))
+                    }
+                }
+                else -> {
+                    emit(Result.failure(e))
                 }
             }
-            else -> {
-                emit(Result.failure(e))
-            }
         }
-    }
 
     private fun mapStoreResponseToUiModel(response: StoreResponse): List<StoreUiModel> {
         return response.allResults.mapNotNull { result ->
             try {
-                mapStoreToUiModel(result.store, result.distance, result.units)
+                mapStoreToUiModel(result.store, result.distance)
             } catch (e: Exception) {
                 null
             }
@@ -74,7 +65,7 @@ class StoreRepository @Inject constructor(
         }
     }
     
-    private fun mapStoreToUiModel(store: Store, distance: Double, units: String): StoreUiModel {
+    private fun mapStoreToUiModel(store: Store, distance: Double): StoreUiModel {
         val storeName = store.name.orEmpty()
         val storeCity = store.city.orEmpty() 
         val storeState = store.state.orEmpty()

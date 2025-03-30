@@ -109,8 +109,8 @@ fun StoreSearchScreen(viewModel: StoreSearchViewModel) {
             
             Spacer(modifier = Modifier.height(8.dp))
             
-            when {
-                uiState.isLoading -> {
+            when (uiState) {
+                is StoreSearchViewModel.StoreSearchUiState.Loading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
@@ -118,16 +118,16 @@ fun StoreSearchScreen(viewModel: StoreSearchViewModel) {
                         CircularProgressIndicator()
                     }
                 }
-                uiState.error != null -> {
-                    ErrorMessage(message = uiState.error!!)
+                is StoreSearchViewModel.StoreSearchUiState.Error -> {
+                    ErrorMessage(message = (uiState as StoreSearchViewModel.StoreSearchUiState.Error).message)
                 }
-                uiState.isEmpty -> {
+                is StoreSearchViewModel.StoreSearchUiState.Empty -> {
                     NoStoresFoundScreen()
                 }
-                uiState.stores.isNotEmpty() -> {
-                    StoreList(stores = uiState.stores)
+                is StoreSearchViewModel.StoreSearchUiState.Success -> {
+                    StoreList(stores = (uiState as StoreSearchViewModel.StoreSearchUiState.Success).stores)
                 }
-                else -> {
+                is StoreSearchViewModel.StoreSearchUiState.Initial -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
