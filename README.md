@@ -6,7 +6,6 @@ A mobile application that helps users locate DICK'S Sporting Goods stores using 
 
 This app follows Clean Architecture principles with MVVM pattern.
 
-## Screenshots
 
 <div style="text-align: center;">
   <h1 style="font-size: 36px; margin-bottom: 20px;">DSCG Store Finder</h1>
