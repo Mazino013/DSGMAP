@@ -55,7 +55,7 @@ class StoreRepository @Inject constructor(
     private fun mapStoreResponseToUiModel(response: StoreResponse): List<StoreUiModel> {
         return response.allResults.mapNotNull { result ->
             try {
-                mapStoreToUiModel(result.store, result.distance, result.units)
+                mapStoreToUiModel(result.store, result.distance)
             } catch (e: Exception) {
                 null
             }
@@ -65,7 +65,7 @@ class StoreRepository @Inject constructor(
         }
     }
     
-    private fun mapStoreToUiModel(store: Store, distance: Double, units: String): StoreUiModel {
+    private fun mapStoreToUiModel(store: Store, distance: Double): StoreUiModel {
         val storeName = store.name.orEmpty()
         val storeCity = store.city.orEmpty() 
         val storeState = store.state.orEmpty()
