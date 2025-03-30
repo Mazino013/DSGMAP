@@ -6,6 +6,7 @@ import app.cash.turbine.test
 import com.example.dsgmap.data.model.StoreUiModel
 import com.example.dsgmap.data.repository.StoreRepository
 import com.example.dsgmap.ui.StoreSearchViewModel
+import com.example.dsgmap.ui.StoreSearchViewModel.StoreSearchUiState
 import com.example.dsgmap.util.LocationProvider
 import com.example.dsgmap.util.MainDispatcherRule
 import com.example.dsgmap.util.MockLogRule
@@ -17,12 +18,9 @@ import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
+
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -90,25 +88,19 @@ class StoreSearchViewModelTest {
         viewModel.uiState.test(timeout = 5.seconds) {
             // Initial state check
             val initialState = awaitItem()
-            assertFalse(initialState.isLoading)
-            assertTrue(initialState.stores.isEmpty())
-            assertNull(initialState.error)
+            assertTrue(initialState is StoreSearchUiState.Initial)
 
             // When
             viewModel.searchStoresByZipCode(zipCode)
 
-            // First state update: loading = true
+            // First state update: Loading
             val loadingState = awaitItem()
-            assertTrue(loadingState.isLoading)
-            assertTrue(loadingState.stores.isEmpty())
-            assertNull(loadingState.error)
+            assertTrue(loadingState is StoreSearchUiState.Loading)
 
-            // Final state: loaded with stores
+            // Final state: Success with stores
             val finalState = awaitItem()
-            assertFalse(finalState.isLoading)
-            assertEquals(expectedUiModels, finalState.stores)
-            assertFalse(finalState.isEmpty)
-            assertNull(finalState.error)
+            assertTrue(finalState is StoreSearchUiState.Success)
+            assertEquals(expectedUiModels, (finalState as StoreSearchUiState.Success).stores)
 
             // No more emissions expected
             expectNoEvents()
@@ -126,24 +118,17 @@ class StoreSearchViewModelTest {
         viewModel.uiState.test(timeout = 5.seconds) {
             // Initial state check
             val initialState = awaitItem()
-            assertFalse(initialState.isLoading)
-            assertTrue(initialState.stores.isEmpty())
-            assertNull(initialState.error)
+            assertTrue(initialState is StoreSearchUiState.Initial)
 
             viewModel.searchStoresByZipCode(zipCode)
 
-            // First state update: loading = true
+            // First state update: Loading
             val loadingState = awaitItem()
-            assertTrue(loadingState.isLoading)
-            assertTrue(loadingState.stores.isEmpty())
-            assertNull(loadingState.error)
+            assertTrue(loadingState is StoreSearchUiState.Loading)
 
-            // Final state: loaded with empty stores
+            // Final state: Empty
             val finalState = awaitItem()
-            assertFalse(finalState.isLoading)
-            assertTrue(finalState.stores.isEmpty())
-            assertTrue(finalState.isEmpty)
-            assertNull(finalState.error)
+            assertTrue(finalState is StoreSearchUiState.Empty)
 
             expectNoEvents()
         }
@@ -161,24 +146,19 @@ class StoreSearchViewModelTest {
         viewModel.uiState.test(timeout = 5.seconds) {
             // Initial state check
             val initialState = awaitItem()
-            assertFalse(initialState.isLoading)
-            assertTrue(initialState.stores.isEmpty())
-            assertNull(initialState.error)
+            assertTrue(initialState is StoreSearchUiState.Initial)
 
             viewModel.searchStoresByZipCode(zipCode)
 
-            // First state update: loading = true
+            // First state update: Loading
             val loadingState = awaitItem()
-            assertTrue(loadingState.isLoading)
-            assertTrue(loadingState.stores.isEmpty())
-            assertNull(loadingState.error)
+            assertTrue(loadingState is StoreSearchUiState.Loading)
 
-            // Final state: error state
+            // Final state: Error
             val finalState = awaitItem()
-            assertFalse(finalState.isLoading)
-            val errorMsg = finalState.error
-            assertNotNull(errorMsg)
-            assertTrue(errorMsg!!.contains(errorMessage))
+            assertTrue(finalState is StoreSearchUiState.Error)
+            val errorState = finalState as StoreSearchUiState.Error
+            assertTrue(errorState.message.contains(errorMessage))
 
             expectNoEvents()
         }
@@ -209,24 +189,18 @@ class StoreSearchViewModelTest {
         viewModel.uiState.test(timeout = 5.seconds) {
             // Initial state check
             val initialState = awaitItem()
-            assertFalse(initialState.isLoading)
-            assertTrue(initialState.stores.isEmpty())
-            assertNull(initialState.error)
+            assertTrue(initialState is StoreSearchUiState.Initial)
 
             viewModel.searchStoresByCurrentLocation()
 
-            // First state update: loading = true
+            // First state update: Loading
             val loadingState = awaitItem()
-            assertTrue(loadingState.isLoading)
-            assertTrue(loadingState.stores.isEmpty())
-            assertNull(loadingState.error)
+            assertTrue(loadingState is StoreSearchUiState.Loading)
 
-            // Final state: loaded with stores
+            // Final state: Success with stores
             val finalState = awaitItem()
-            assertFalse(finalState.isLoading)
-            assertEquals(expectedUiModels, finalState.stores)
-            assertFalse(finalState.isEmpty)
-            assertNull(finalState.error)
+            assertTrue(finalState is StoreSearchUiState.Success)
+            assertEquals(expectedUiModels, (finalState as StoreSearchUiState.Success).stores)
 
             expectNoEvents()
         }
@@ -239,24 +213,19 @@ class StoreSearchViewModelTest {
         viewModel.uiState.test(timeout = 5.seconds) {
             // Initial state check
             val initialState = awaitItem()
-            assertFalse(initialState.isLoading)
-            assertTrue(initialState.stores.isEmpty())
-            assertNull(initialState.error)
+            assertTrue(initialState is StoreSearchUiState.Initial)
 
             viewModel.searchStoresByCurrentLocation()
 
-            // First state update: loading = true
+            // First state update: Loading
             val loadingState = awaitItem()
-            assertTrue(loadingState.isLoading)
-            assertTrue(loadingState.stores.isEmpty())
-            assertNull(loadingState.error)
+            assertTrue(loadingState is StoreSearchUiState.Loading)
 
-            // Final state: error state
+            // Final state: Error
             val finalState = awaitItem()
-            assertFalse(finalState.isLoading)
-            val errorMsg = finalState.error
-            assertNotNull(errorMsg)
-            assertTrue(errorMsg!!.contains("Could not determine your location"))
+            assertTrue(finalState is StoreSearchUiState.Error)
+            val errorState = finalState as StoreSearchUiState.Error
+            assertTrue(errorState.message.contains("Could not determine your location"))
 
             expectNoEvents()
         }
@@ -282,29 +251,26 @@ class StoreSearchViewModelTest {
         viewModel.uiState.test(timeout = 5.seconds) {
             // Initial state
             val initialState = awaitItem()
-            assertFalse(initialState.isLoading)
-            assertTrue(initialState.stores.isEmpty())
+            assertTrue(initialState is StoreSearchUiState.Initial)
 
             // Load stores
             viewModel.searchStoresByZipCode(zipCode)
 
             // Loading state
             val loadingState = awaitItem()
-            assertTrue(loadingState.isLoading)
+            assertTrue(loadingState is StoreSearchUiState.Loading)
 
             // Stores loaded state
             val loadedState = awaitItem()
-            assertFalse(loadedState.isLoading)
-            assertEquals(stores, loadedState.stores)
+            assertTrue(loadedState is StoreSearchUiState.Success)
+            assertEquals(stores, (loadedState as StoreSearchUiState.Success).stores)
 
             // Simulate lifecycle pause event
             viewModel.onPause(lifecycleOwner)
 
-            // State after pause: stores cleared
+            // State after pause: back to Initial
             val clearedState = awaitItem()
-            assertFalse(clearedState.isLoading)
-            assertTrue(clearedState.stores.isEmpty())
-            assertNull(clearedState.error)
+            assertTrue(clearedState is StoreSearchUiState.Initial)
 
             expectNoEvents()
         }
