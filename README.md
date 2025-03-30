@@ -10,12 +10,12 @@ This app follows Clean Architecture principles with MVVM pattern.
 <div style="text-align: center;">
   <h1 style="font-size: 36px; margin-bottom: 20px;">DSCG Store Finder</h1>
   
-  <div style="display: flex; justify-content: center; gap: 20px;">
-    <img src="https://github.com/user-attachments/assets/72707731-b309-46e2-a55f-909926fa6cdb" style="width: 30%; max-width: 50;">
-    <img src="https://github.com/user-attachments/assets/1b1b2452-d5ad-428a-8f32-01f2b70ac39b" style="width: 30%; max-width: 50px;">
-    <img src="https://github.com/user-attachments/assets/1b066175-63cb-4200-9fe9-c0f734445dff" style="width: 30%; max-width: 50px;">
-    <img src="https://github.com/user-attachments/assets/ff1b8be7-d79e-4662-bae0-0dfbaf861c34" style="width: 30%; max-width: 50px;">
-    <img src="https://github.com/user-attachments/assets/88f18f98-e248-4322-bf17-1364f449fa72" style="width: 30%; max-width: 50px;">
+  <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;">
+    <img src="https://github.com/user-attachments/assets/72707731-b309-46e2-a55f-909926fa6cdb" style="width: 50px; height: auto;">
+    <img src="https://github.com/user-attachments/assets/1b1b2452-d5ad-428a-8f32-01f2b70ac39b" style="width: 50px; height: auto;">
+    <img src="https://github.com/user-attachments/assets/1b066175-63cb-4200-9fe9-c0f734445dff" style="width: 50px; height: auto;">
+    <img src="https://github.com/user-attachments/assets/ff1b8be7-d79e-4662-bae0-0dfbaf861c34" style="width: 50px; height: auto;">
+    <img src="https://github.com/user-attachments/assets/88f18f98-e248-4322-bf17-1364f449fa72" style="width: 50px; height: auto;">
   </div>
 </div>
 
