@@ -9,7 +9,7 @@ This app follows Clean Architecture principles with MVVM pattern.
 ## Screenshots
 
 <div style="text-align: center;">
-  <h1 style="font-size: 36px; margin-bottom: 20px;">Pokedex</h1>
+  <h1 style="font-size: 36px; margin-bottom: 20px;">DSCG Store Finder</h1>
   
   <div style="display: flex; justify-content: center; gap: 20px;">
     <img src="https://github.com/user-attachments/assets/72707731-b309-46e2-a55f-909926fa6cdb" style="width: 30%; max-width: 100;">
