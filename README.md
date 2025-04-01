@@ -4,7 +4,7 @@ A mobile application that helps users locate DICK'S Sporting Goods stores using 
 
 ## Architecture Components
 
-This app follows Clean Architecture principles with MVVM pattern.
+This app follows Clean Architecture principles with MVVM pattern
 
 ## Screenshots
 <img alt="Store Search Screen" src="C:\Users\kingj\OneDrive\Pictures\Screenshots\DSG1.png"/>
@@ -36,6 +36,12 @@ This app follows Clean Architecture principles with MVVM pattern.
 - **StoreSearchViewModelTest**: Unit tests for the ViewModel
 - **StoreRepositoryTest**: Unit tests for the Repository
 
+### 6. Navigation
+- **Single-Activity Architecture**: Utilizes Jetpack Navigation for Compose
+- **NavigationRoute**: Defines app navigation destinations
+- **NavHost**: Centralized navigation graph in MainActivity
+- **External Intent Integration**: Seamlessly launches external map applications
+
 ## Features
 
 ### 1. Search stores by ZIP code
@@ -60,6 +66,17 @@ This app follows Clean Architecture principles with MVVM pattern.
 - Keys accessed at build-time via BuildConfig fields
 - Consistent error handling prevents sensitive information exposure
 
+
+### 6. Modern Navigation Implementation
+- Migrated from multi-activity architecture to single-activity with Compose Navigation
+- Removed MapDetailActivity in favor of direct map app integration
+
+### 7. Optimized Map Integration
+- Created MapUtils utility class for clean external map app launching
+- Streamlined navigation flow when opening location in maps
+
+
+
 ## Setup Instructions
 
 1. Clone the repository
@@ -76,6 +93,7 @@ This app follows Clean Architecture principles with MVVM pattern.
 
 ## Libraries Used
 - Jetpack Compose for UI
+- Jetpack Navigation for Compose
 - Retrofit for network calls
 - Hilt for dependency injection
 - Kotlin Coroutines and Flow

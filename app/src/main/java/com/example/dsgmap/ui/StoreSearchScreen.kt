@@ -4,6 +4,7 @@ import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -47,7 +48,10 @@ import java.text.DecimalFormat
 import androidx.compose.material3.HorizontalDivider
 
 @Composable
-fun StoreSearchScreen(viewModel: StoreSearchViewModel) {
+fun StoreSearchScreen(
+    viewModel: StoreSearchViewModel,
+    onNavigateToMapDetail: (String, Double, Double) -> Unit
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
     var searchQuery by rememberSaveable { mutableStateOf("") }
@@ -125,7 +129,11 @@ fun StoreSearchScreen(viewModel: StoreSearchViewModel) {
                     NoStoresFoundScreen()
                 }
                 is StoreSearchViewModel.StoreSearchUiState.Success -> {
-                    StoreList(stores = (uiState as StoreSearchViewModel.StoreSearchUiState.Success).stores)
+                    StoreList(
+                        stores = (uiState as StoreSearchViewModel.StoreSearchUiState.Success).stores,
+                        modifier = Modifier.fillMaxWidth(),
+                        onNavigateToMapDetail = onNavigateToMapDetail
+                    )
                 }
                 is StoreSearchViewModel.StoreSearchUiState.Initial -> {
                     Box(
@@ -212,9 +220,13 @@ fun SearchBar(
 }
 
 @Composable
-fun StoreList(stores: List<StoreUiModel>) {
+fun StoreList(
+    stores: List<StoreUiModel>,
+    modifier: Modifier = Modifier,
+    onNavigateToMapDetail: (String, Double, Double) -> Unit = { _, _, _ -> }
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
@@ -234,7 +246,16 @@ fun StoreList(stores: List<StoreUiModel>) {
         ) {
             LazyColumn {
                 items(stores) { store ->
-                    StoreItem(store = store)
+                    StoreItem(
+                        store = store,
+                        onItemClick = {
+                            onNavigateToMapDetail(
+                                store.name,
+                                store.latitude,
+                                store.longitude
+                            )
+                        }
+                    )
                     if (stores.last() != store) {
                         HorizontalDivider(
                             modifier = Modifier.padding(horizontal = 16.dp),
@@ -249,13 +270,17 @@ fun StoreList(stores: List<StoreUiModel>) {
 }
 
 @Composable
-fun StoreItem(store: StoreUiModel) {
+fun StoreItem(
+    store: StoreUiModel,
+    onItemClick: () -> Unit = {}
+) {
     val distanceFormat = remember { DecimalFormat("0.0") }
     
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+            .clickable { onItemClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(

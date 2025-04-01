@@ -1,6 +1,5 @@
 package com.example.dsgmap.ui
 
-import android.location.Location
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
@@ -50,32 +49,11 @@ class StoreSearchViewModel @Inject constructor(
         
         viewModelScope.launch {
             try {
-                storeRepository.searchStoresByZipCode(zipCode)
-                    .catch { e ->
-                        _uiState.value = StoreSearchUiState.Error(
-                            "Failed to load stores: ${e.message ?: "Unknown error"}"
-                        )
-                    }
-                    .collectLatest { result ->
-                        result.fold(
-                            onSuccess = { stores ->
-                                if (stores.isEmpty()) {
-                                    _uiState.value = StoreSearchUiState.Empty()
-                                } else {
-                                    _uiState.value = StoreSearchUiState.Success(stores)
-                                }
-                            },
-                            onFailure = { e ->
-                                _uiState.value = StoreSearchUiState.Error(
-                                    "Failed to load stores: ${e.message ?: "Unknown error"}"
-                                )
-                            }
-                        )
-                    }
+                handleStoreSearch {
+                    storeRepository.searchStoresByZipCode(zipCode)
+                }
             } catch (e: Exception) {
-                _uiState.value = StoreSearchUiState.Error(
-                    "Failed to load stores: ${e.message ?: "Unknown error"}"
-                )
+                handleSearchError(e)
             }
         }
     }
@@ -92,16 +70,20 @@ class StoreSearchViewModel @Inject constructor(
                 return@launch
             }
             
-            searchStoresByLocation(location)
+            try {
+                handleStoreSearch {
+                    storeRepository.searchStoresByLocation(location.latitude, location.longitude)
+                }
+            } catch (e: Exception) {
+                handleSearchError(e)
+            }
         }
     }
-    
-    private suspend fun searchStoresByLocation(location: Location) {
-        storeRepository.searchStoresByLocation(location.latitude, location.longitude)
-            .catch { e ->
-                _uiState.value = StoreSearchUiState.Error(
-                    "Failed to load stores: ${e.localizedMessage}"
-                )
+
+    private suspend fun handleStoreSearch(searchFunction: suspend () -> kotlinx.coroutines.flow.Flow<Result<List<StoreUiModel>>>) {
+        searchFunction()
+            .catch { e -> 
+                handleSearchError(e) 
             }
             .collectLatest { result ->
                 result.fold(
@@ -112,15 +94,17 @@ class StoreSearchViewModel @Inject constructor(
                             _uiState.value = StoreSearchUiState.Success(stores)
                         }
                     },
-                    onFailure = { e ->
-                        _uiState.value = StoreSearchUiState.Error(
-                            "Failed to load stores: ${e.localizedMessage}"
-                        )
-                    }
+                    onFailure = { e -> handleSearchError(e) }
                 )
             }
     }
-    
+
+    private fun handleSearchError(e: Throwable) {
+        _uiState.value = StoreSearchUiState.Error(
+            "Failed to load stores: ${e.message ?: "Unknown error"}"
+        )
+    }
+
     fun hasLocationPermission(): Boolean {
         return locationProvider.hasLocationPermission()
     }
