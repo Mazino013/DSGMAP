@@ -13,7 +13,7 @@ This app follows Clean Architecture principles with MVVM pattern.
   <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;">
     <img src="https://github.com/user-attachments/assets/482286b4-d048-45b4-84cc-333f604f4365" style="width: 150px; height: auto;">
     <img src="https://github.com/user-attachments/assets/1b1b2452-d5ad-428a-8f32-01f2b70ac39b" style="width: 150px; height: auto;">
-    <img src="(https://github.com/user-attachments/assets/70ada432-e71f-4a7b-989a-4eb776c73846" style="width: 150px; height: auto;">
+    <img src="https://github.com/user-attachments/assets/70ada432-e71f-4a7b-989a-4eb776c73846" style="width: 150px; height: auto;">
     <img src="https://github.com/user-attachments/assets/ff1b8be7-d79e-4662-bae0-0dfbaf861c34" style="width: 150px; height: auto;">
     <img src="https://github.com/user-attachments/assets/88f18f98-e248-4322-bf17-1364f449fa72" style="width: 150px; height: auto;">
   </div>
