@@ -73,5 +73,7 @@ data class StoreUiModel(
     val name: String,
     val distance: Double,
     val location: String,
-    val address: String
+    val address: String,
+    val latitude: Double,
+    val longitude: Double
 )

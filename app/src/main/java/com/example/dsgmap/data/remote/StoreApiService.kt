@@ -3,8 +3,8 @@ package com.example.dsgmap.data.remote
 import com.example.dsgmap.BuildConfig
 import com.example.dsgmap.data.model.StoreResponse
 import retrofit2.http.GET
-import retrofit2.http.Query
 import retrofit2.http.Headers
+import retrofit2.http.Query
 
 interface StoreApiService {
 

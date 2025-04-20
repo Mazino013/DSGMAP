@@ -74,13 +74,19 @@ class StoreRepository @Inject constructor(
         } else {
             "Unknown Location"
         }
+        
+        // Parse latitude and longitude from strings to doubles
+        val latitude = store.lat?.toDoubleOrNull() ?: 0.0
+        val longitude = store.lng?.toDoubleOrNull() ?: 0.0
     
         return StoreUiModel(
             id = store.location.orEmpty(),
             name = storeName,
             distance = distance,
             location = location,
-            address = buildAddress(store)
+            address = buildAddress(store),
+            latitude = latitude,
+            longitude = longitude
         )
     }
     

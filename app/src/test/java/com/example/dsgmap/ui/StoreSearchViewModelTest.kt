@@ -70,14 +70,18 @@ class StoreSearchViewModelTest {
                 name = "DSG Pittsburgh",
                 distance = 5.2,
                 location = "Pittsburgh, PA",
-                address = "123 Main St, Pittsburgh, PA 15108"
+                address = "123 Main St, Pittsburgh, PA 15108",
+                latitude = 40.4406,
+                longitude = -79.9959
             ),
             StoreUiModel(
                 id = "2",
                 name = "DSG Philadelphia",
                 distance = 15.7,
                 location = "Philadelphia, PA",
-                address = "456 Market St, Philadelphia, PA 19102"
+                address = "456 Market St, Philadelphia, PA 19102",
+                latitude = 39.9526,
+                longitude = -75.1652
             )
         )
 
@@ -178,7 +182,9 @@ class StoreSearchViewModelTest {
                 name = "DSG Pittsburgh",
                 distance = 5.2,
                 location = "Pittsburgh, PA",
-                address = "123 Main St, Pittsburgh, PA 15108"
+                address = "123 Main St, Pittsburgh, PA 15108",
+                latitude = 40.4406,
+                longitude = -79.9959
             )
         )
 
@@ -241,7 +247,9 @@ class StoreSearchViewModelTest {
                 name = "DSG Pittsburgh",
                 distance = 5.2,
                 location = "Pittsburgh, PA",
-                address = "123 Main St"
+                address = "123 Main St",
+                latitude = 40.4406,
+                longitude = -79.9959
             )
         )
 
