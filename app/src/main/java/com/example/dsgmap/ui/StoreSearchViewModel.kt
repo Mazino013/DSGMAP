@@ -44,9 +44,9 @@ class StoreSearchViewModel @Inject constructor(
 
     fun searchStoresByZipCode(zipCode: String) {
         if (zipCode.isBlank()) return
-        
+
         _uiState.value = StoreSearchUiState.Loading
-        
+
         viewModelScope.launch {
             try {
                 handleStoreSearch {
@@ -60,7 +60,7 @@ class StoreSearchViewModel @Inject constructor(
 
     fun searchStoresByCurrentLocation() {
         _uiState.value = StoreSearchUiState.Loading
-        
+
         viewModelScope.launch {
             val location = locationProvider.getCurrentLocation()
             if (location == null) {
@@ -69,7 +69,7 @@ class StoreSearchViewModel @Inject constructor(
                 )
                 return@launch
             }
-            
+
             try {
                 handleStoreSearch {
                     storeRepository.searchStoresByLocation(location.latitude, location.longitude)
@@ -82,8 +82,8 @@ class StoreSearchViewModel @Inject constructor(
 
     private suspend fun handleStoreSearch(searchFunction: suspend () -> kotlinx.coroutines.flow.Flow<Result<List<StoreUiModel>>>) {
         searchFunction()
-            .catch { e -> 
-                handleSearchError(e) 
+            .catch { e ->
+                handleSearchError(e)
             }
             .collectLatest { result ->
                 result.fold(
